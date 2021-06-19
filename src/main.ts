@@ -16,6 +16,8 @@ const DEFAULT_DOCKER_OPTIONS = '';
     const email = core.getInput('email', { required: true });
     const herokuApiKey = core.getInput('heroku_api_key', { required: true });
     const herokuAppName = core.getInput('heroku_app_name', { required: true });
+    const presearchPrivateKey = core.getInput('private_key', { required: true });
+    const presearchPublicKey = core.getInput('public_key', { required: true });
     const dockerFileDirectory = core.getInput('dockerfile_directory', { required: true });
     const dockerfileName = core.getInput('dockerfile_name') || DEFAULT_DOCKERFILE_NAME;
     const dockerOptions = core.getInput('docker_options') || DEFAULT_DOCKER_OPTIONS;
@@ -24,6 +26,8 @@ const DEFAULT_DOCKER_OPTIONS = '';
     assert(email, 'Missing required field: `email`.');
     assert(herokuApiKey, 'Missing required field: `heroku_api_key`.');
     assert(herokuAppName, 'Missing required field: `heroku_app_name`.');
+    assert(presearchPrivateKey, 'Missing required field: `private_key`.');
+    assert(presearchPublicKey, 'Missing required field: `public_key`.');
     assert(dockerFileDirectory, 'Missing required field: `dockerfile_directory`.');
 
     // Create CWD that will be used by all commands
@@ -43,6 +47,8 @@ const DEFAULT_DOCKER_OPTIONS = '';
       dockerfileName,
       dockerOptions,
       herokuAppName,
+      presearchPrivateKey,
+      presearchPublicKey,
       cwd,
       processType,
     });
@@ -51,6 +57,8 @@ const DEFAULT_DOCKER_OPTIONS = '';
     const pushed = await pushDockerContainer({
       herokuApiKey,
       herokuAppName,
+      presearchPrivateKey,
+      presearchPublicKey,
       cwd,
       processType,
     });
@@ -59,6 +67,8 @@ const DEFAULT_DOCKER_OPTIONS = '';
     const released = await releaseDockerContainer({
       herokuApiKey,
       herokuAppName,
+      presearchPrivateKey,
+      presearchPublicKey,
       cwd,
       processType,
     });
