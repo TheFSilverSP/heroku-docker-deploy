@@ -4,11 +4,15 @@ import { runCommand } from '../utils';
 export const releaseDockerContainer = async ({
   herokuApiKey,
   herokuAppName,
+  presearchPrivateKey,
+  presearchPublicKey,
   cwd,
   processType,
 }: {
   herokuAppName: string;
   herokuApiKey: string;
+  presearchPrivateKey: string;
+  presearchPublicKey: string;
   cwd: string;
   processType: string;
 }): Promise<boolean> => {
