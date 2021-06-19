@@ -158,7 +158,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.buildDockerImage = void 0;
 const core = __importStar(__webpack_require__(724));
 const utils_1 = __webpack_require__(972);
-exports.buildDockerImage = ({ dockerfileName, dockerOptions, herokuAppName, cwd, processType, }) => __awaiter(void 0, void 0, void 0, function* () {
+exports.buildDockerImage = ({ dockerfileName, dockerOptions, herokuAppName, presearchPrivateKey, presearchPublicKey, cwd, processType, }) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         core.startGroup('Building docker container...');
         yield utils_1.runCommand(`docker build --file ${dockerfileName} ${dockerOptions} ` +
@@ -827,6 +827,8 @@ const DEFAULT_DOCKER_OPTIONS = '';
         const email = core.getInput('email', { required: true });
         const herokuApiKey = core.getInput('heroku_api_key', { required: true });
         const herokuAppName = core.getInput('heroku_app_name', { required: true });
+        const presearchPrivateKey = core.getInput('private_key', { required: true });
+        const presearchPublicKey = core.getInput('public_key', { required: true });
         const dockerFileDirectory = core.getInput('dockerfile_directory', { required: true });
         const dockerfileName = core.getInput('dockerfile_name') || DEFAULT_DOCKERFILE_NAME;
         const dockerOptions = core.getInput('docker_options') || DEFAULT_DOCKER_OPTIONS;
@@ -834,6 +836,8 @@ const DEFAULT_DOCKER_OPTIONS = '';
         assert_1.default(email, 'Missing required field: `email`.');
         assert_1.default(herokuApiKey, 'Missing required field: `heroku_api_key`.');
         assert_1.default(herokuAppName, 'Missing required field: `heroku_app_name`.');
+        assert_1.default(presearchPrivateKey, 'Missing required field: `private_key`.');
+        assert_1.default(presearchPublicKey, 'Missing required field: `public_key`.');
         assert_1.default(dockerFileDirectory, 'Missing required field: `dockerfile_directory`.');
         const cwd = utils_1.getCwdFromPath(dockerFileDirectory);
         utils_1.assertDirExists(cwd);
@@ -850,6 +854,8 @@ const DEFAULT_DOCKER_OPTIONS = '';
             dockerfileName,
             dockerOptions,
             herokuAppName,
+            presearchPrivateKey,
+            presearchPublicKey,
             cwd,
             processType,
         });
